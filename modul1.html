@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul 1 — SQL Dasar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white bg-opacity-75 border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-black" href="index.html">Rangkuman Modul 1–5</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link active fw-bold" href="modul1.html">Modul 1 • SQL Dasar</a></li><li class="nav-item"><a class="nav-link" href="modul2.html">Modul 2 • Agregat</a></li><li class="nav-item"><a class="nav-link" href="modul3.html">Modul 3 • Relasi & Join</a></li><li class="nav-item"><a class="nav-link" href="modul4.html">Modul 4 • Form & CRUD</a></li><li class="nav-item"><a class="nav-link" href="modul5.html">Modul 5 • Session & Login</a></li><li class="nav-item"><a class="nav-link" href="latihan-ujian.html">Latihan Ujian</a></li>
+        <li class="nav-item"><a class="nav-link" href="lampiran-db.html">Lampiran • DB</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+
+<section class="hero p-4 p-lg-5">
+  <h1 class="h2 fw-black mb-2 section-title">Modul 1 — SQL Dasar (DDL & DML)</h1>
+  <p class="mb-0">
+    Di tahap awal belajar, kalian perlu mengenali perintah-perintah SQL yang paling sering dipakai.
+    Modul ini memperkenalkan <strong>DDL</strong> (mengatur struktur tabel) dan <strong>DML</strong> (mengolah isi data).
+  </p>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Kamus Istilah (Modul 1)</h5>
+      <p class="muted mb-3">Bagian ini sengaja saya tulis lengkap karena istilah seperti ini sering muncul di soal.</p>
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>SQL</strong> = <em>Structured Query Language</em> → bahasa untuk mengakses dan mengelola data di database relasional.</li>
+            <li><strong>DBMS</strong> = <em>Database Management System</em> → perangkat lunak pengelola database (contoh: MySQL, MariaDB).</li>
+            <li><strong>RDBMS</strong> = <em>Relational DBMS</em> → DBMS berbasis tabel yang saling berelasi (MySQL termasuk RDBMS).</li>
+            <li><strong>DDL</strong> = <em>Data Definition Language</em> → perintah untuk struktur (CREATE/ALTER/DROP).</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>DML</strong> = <em>Data Manipulation Language</em> → perintah untuk isi data (INSERT/UPDATE/DELETE/SELECT).</li>
+            <li><strong>PK</strong> = <em>Primary Key</em> → kolom identitas unik tiap baris.</li>
+            <li><strong>FK</strong> = <em>Foreign Key</em> → kolom penghubung ke PK tabel lain (membentuk relasi).</li>
+            <li><strong>AI</strong> = <em>Auto Increment</em> → penomoran otomatis pada kolom INT (umumnya untuk id).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert alert-info mt-3 mb-0">
+        <strong>Tips:</strong> Saat ujian, biasakan menulis kepanjangan istilah dulu, baru fungsinya, baru contoh perintahnya.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Catatan penting sebelum praktik</h5>
+      <p class="mb-2">
+        Saat kalian menulis SQL, biasakan memeriksa tiga hal: <strong>nama tabel</strong>, <strong>nama kolom</strong>, dan <strong>tipe data</strong>.
+        Kesalahan paling sering adalah salah eja kolom atau salah format nilai (misalnya tanggal).
+      </p>
+      <ul class="mb-0">
+        <li><strong>INT</strong> untuk angka bulat (misal id, stok).</li>
+        <li><strong>VARCHAR</strong> untuk teks pendek (misal nama, email).</li>
+        <li><strong>DATE</strong> untuk tanggal (format: YYYY-MM-DD).</li>
+        <li><strong>PRIMARY KEY</strong> untuk identitas unik setiap baris.</li>
+        <li><strong>FOREIGN KEY</strong> untuk menghubungkan tabel (relasi).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="mt-4">
+
+<div class="card shadow-sm"><div class="card-body">
+  <h5 class="fw-bold">Materi yang sering muncul</h5>
+  <ul class="mb-0">
+    <li>Perbedaan DDL dan DML + contoh perintahnya.</li>
+    <li>CREATE/DROP DATABASE, CREATE/ALTER/DROP TABLE.</li>
+    <li>UPDATE/DELETE aman (wajib WHERE).</li>
+    <li>Tipe data: INT, VARCHAR, DATE, DATETIME, FLOAT.</li>
+    <li>PRIMARY KEY dan FOREIGN KEY.</li>
+  </ul>
+</div></div>
+
+</section>
+
+<section class="mt-4">
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card shadow-sm h-100"><div class="card-body">
+        <h5 class="fw-bold">1) DDL vs DML</h5>
+        <p class="mb-2">DDL adalah singkatan dari <strong>Data Definition Language</strong>, yaitu kumpulan perintah untuk <strong>membuat, mengubah, dan menghapus struktur</strong> database atau tabel. Contoh perintah DDL: <code>CREATE DATABASE</code>, <code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>DROP TABLE</code>.
+<br/><br/>
+DML adalah singkatan dari <strong>Data Manipulation Language</strong>, yaitu kumpulan perintah untuk <strong>mengelola isi data</strong> di dalam tabel (menambah, mengubah, menghapus, menampilkan data). Contoh perintah DML: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>SELECT</code>.
+<br/><br/>
+Supaya kalian tidak tertukar, ingat ini: DDL mengatur <em>wadahnya</em> (tabel/kolom), sedangkan DML mengatur <em>isi di dalam wadah</em> (baris data).</p>
+        <ul class="mb-0">
+          <li>DDL: “membangun rak & label di lemari arsip”</li>
+          <li>DML: “menaruh, memperbaiki, menghapus, dan mencari berkas”</li>
+        </ul>
+      
+        <div class="alert alert-info mt-3 mb-0">
+          <strong>Contoh nyata DDL vs DML:</strong><br/>
+          • DDL: "Saya membuat tabel <code>siswa</code> dengan kolom <code>nis</code>, <code>nama</code>, <code>alamat</code>."<br/>
+          • DML: "Saya menambahkan data siswa baru, lalu menampilkan daftar siswa."
+        </div>
+
+      </div></div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm h-100"><div class="card-body">
+        <h5 class="fw-bold">2) Wajib pakai WHERE</h5>
+        <p class="mb-0">
+          Saat <code>UPDATE</code> atau <code>DELETE</code>, kalian wajib hati-hati.
+          Tanpa <code>WHERE</code>, data bisa ikut berubah/hilang semuanya.
+        </p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-4">
+  <div class="card shadow-sm"><div class="card-body">
+    <h5 class="fw-bold">Contoh Praktik Cepat</h5>
+    <p class="muted mb-3">Jalankan di phpMyAdmin (tab SQL). Silakan sesuaikan nama tabel/kolom.</p>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <h6 class="fw-bold">A) CREATE TABLE</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m1_ddl">Copy</button>
+</div>
+<pre id="m1_ddl" data-raw="-- DDL (Data Definition Language): membuat struktur tabel baru
+CREATE TABLE ekskul (
+  id_ekskul INT AUTO_INCREMENT PRIMARY KEY,
+  nama_ekskul VARCHAR(50) NOT NULL,
+  pembina VARCHAR(100)
+);
+
+-- Contoh DDL lain (mengubah struktur): menambah kolom ke tabel siswa
+ALTER TABLE siswa
+ADD COLUMN email VARCHAR(100);"><code>-- DDL (Data Definition Language): membuat struktur tabel baru
+CREATE TABLE ekskul (
+  id_ekskul INT AUTO_INCREMENT PRIMARY KEY,
+  nama_ekskul VARCHAR(50) NOT NULL,
+  pembina VARCHAR(100)
+);
+
+-- Contoh DDL lain (mengubah struktur): menambah kolom ke tabel siswa
+ALTER TABLE siswa
+ADD COLUMN email VARCHAR(100);</code></pre>
+
+      </div>
+      <div class="col-lg-6">
+        <h6 class="fw-bold">B) INSERT, UPDATE, DELETE</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m1_dml">Copy</button>
+</div>
+<pre id="m1_dml" data-raw="-- DML (Data Manipulation Language): mengelola isi data
+
+-- INSERT: menambah data ekskul
+INSERT INTO ekskul (nama_ekskul, pembina)
+VALUES (&#x27;Pramuka&#x27;, &#x27;Pak Rahmat&#x27;);
+
+-- UPDATE: mengubah data (ingat: wajib WHERE)
+UPDATE siswa
+SET alamat = &#x27;Jakarta Selatan&#x27;
+WHERE nis = &#x27;S001&#x27;;
+
+-- DELETE: menghapus data (ingat: wajib WHERE)
+DELETE FROM peminjaman
+WHERE id_pinjam = 2;"><code>-- DML (Data Manipulation Language): mengelola isi data
+
+-- INSERT: menambah data ekskul
+INSERT INTO ekskul (nama_ekskul, pembina)
+VALUES (&#x27;Pramuka&#x27;, &#x27;Pak Rahmat&#x27;);
+
+-- UPDATE: mengubah data (ingat: wajib WHERE)
+UPDATE siswa
+SET alamat = &#x27;Jakarta Selatan&#x27;
+WHERE nis = &#x27;S001&#x27;;
+
+-- DELETE: menghapus data (ingat: wajib WHERE)
+DELETE FROM peminjaman
+WHERE id_pinjam = 2;</code></pre>
+
+      </div>
+      <div class="col-lg-12">
+        <h6 class="fw-bold mt-2">C) SELECT</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m1_select">Copy</button>
+</div>
+<pre id="m1_select" data-raw="-- SELECT: menampilkan data
+
+-- 1) cek isi tabel
+SELECT * FROM siswa;
+
+-- 2) tampilkan kolom tertentu (lebih rapi)
+SELECT nis, nama, alamat
+FROM siswa
+ORDER BY nama ASC;
+
+-- 3) filter data (WHERE)
+SELECT nis, nama, tahun_masuk
+FROM siswa
+WHERE tahun_masuk = 2023;"><code>-- SELECT: menampilkan data
+
+-- 1) cek isi tabel
+SELECT * FROM siswa;
+
+-- 2) tampilkan kolom tertentu (lebih rapi)
+SELECT nis, nama, alamat
+FROM siswa
+ORDER BY nama ASC;
+
+-- 3) filter data (WHERE)
+SELECT nis, nama, tahun_masuk
+FROM siswa
+WHERE tahun_masuk = 2023;</code></pre>
+
+      </div>
+    </div>
+  </div></div>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm exercise-card">
+    <div class="card-header py-3 px-3 px-lg-4">
+      <div class="exercise-head">
+        <div>
+          <h5 class="fw-bold mb-1">Latihan (Modul 1)</h5>
+          <small class="muted">Kerjakan di <strong>db_sekolah</strong>. Tulis query rapi (baris baru + indent) dan simpan hasilnya.</small>
+        </div>
+        <div class="exercise-meta">
+          <span class="badge badge-soft rounded-pill px-3 py-2">Estimasi 30 menit</span>
+          <span class="badge badge-soft2 rounded-pill px-3 py-2">Wajib screenshot output</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-3 p-lg-4">
+      <div class="row g-3">
+        <div class="col-lg-5">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Instruksi pengerjaan</h6>
+              <ol class="mb-0 checklist">
+                <li><strong>Pilih database</strong>: jalankan <code>USE db_sekolah;</code> (atau pilih dari phpMyAdmin).</li>
+                <li><strong>Tulis query</strong> dulu di catatan, lalu jalankan di phpMyAdmin (tab SQL).</li>
+                <li><strong>Pastikan benar</strong>: cek nama kolom, tanda petik, dan hasil output.</li>
+                <li><strong>Simpan bukti</strong>: screenshot query + tabel hasilnya.</li>
+                <li><strong>Kumpulkan</strong>: file PDF/Doc berisi jawaban (nomor + query + screenshot).</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Soal latihan</h6>
+              
+<div class="exercise-grid mt-2">
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 1 — DDL (struktur)</div>
+      <ol class="mb-0">
+        <li>Buat tabel <code>ekstrakurikuler</code> (id INT PK AI, nama VARCHAR(50)).</li>
+        <li>Tambahkan 3 data ekskul.</li>
+        <li>Tampilkan semua data ekskul.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 2 — DML (isi data)</div>
+      <ol class="mb-0">
+        <li>Update salah satu nama ekskul (wajib pakai <code>WHERE</code>).</li>
+        <li>Delete 1 data ekskul (wajib pakai <code>WHERE</code>).</li>
+        <li>Tuliskan 1 kalimat: apa risiko UPDATE/DELETE tanpa WHERE?</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 3 — SELECT + filter</div>
+      <ol class="mb-0">
+        <li>Tampilkan siswa yang <code>tahun_masuk = 2023</code> (kolom: nis, nama, alamat).</li>
+        <li>Tampilkan siswa perempuan yang alamatnya Jakarta.</li>
+        <li>Urutkan hasil berdasarkan nama A–Z.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 alert alert-info mb-0">
+        <strong>Catatan guru:</strong> Jika hasil kosong, cek lagi syaratnya. Bisa jadi datanya memang tidak memenuhi kondisi.
+        Kalian boleh menyesuaikan angka batas (misal 80, 85) asal logikanya tetap benar.
+      </div>
+    </div>
+  </div>
+</section>
+
+</section>
+
+</main>
+<footer class="container pb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3 gap-2">
+    <small class="muted">Didesain untuk GitHub Pages (statis).</small>
+    <small class="muted">© 2026 • Ringkasan modul + latihan</small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

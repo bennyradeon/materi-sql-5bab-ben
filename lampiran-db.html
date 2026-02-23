@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lampiran — Database</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white bg-opacity-75 border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-black" href="index.html">Rangkuman Modul 1–5</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="modul1.html">Modul 1 • SQL Dasar</a></li><li class="nav-item"><a class="nav-link" href="modul2.html">Modul 2 • Agregat</a></li><li class="nav-item"><a class="nav-link" href="modul3.html">Modul 3 • Relasi & Join</a></li><li class="nav-item"><a class="nav-link" href="modul4.html">Modul 4 • Form & CRUD</a></li><li class="nav-item"><a class="nav-link" href="modul5.html">Modul 5 • Session & Login</a></li><li class="nav-item"><a class="nav-link active fw-bold" href="lampiran-db.html">Lampiran • DB</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+
+<section class="hero p-4 p-lg-5">
+  <h1 class="h2 fw-black mb-2 section-title">Lampiran — Struktur Database</h1>
+  <p class="mb-0">Tempelkan source SQL lengkap yang Anda gunakan di kelas, agar siswa bisa copy-paste saat praktik.</p>
+</section>
+
+<section class="mt-4">
+  <ul class="nav nav-pills gap-2" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active rounded-pill" data-bs-toggle="pill" data-bs-target="#sekolah" type="button" role="tab">db_sekolah</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link rounded-pill" data-bs-toggle="pill" data-bs-target="#kuliah" type="button" role="tab">db_kuliah</button>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="sekolah" role="tabpanel">
+      <div class="card shadow-sm"><div class="card-body">
+        <h5 class="fw-bold">db_sekolah</h5>
+        <p class="muted">Tempelkan SOURCE LENGKAP db_sekolah di blok berikut (CREATE DATABASE, CREATE TABLE, INSERT data).</p>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="db_sekolah_full">Copy</button>
+</div>
+<pre id="db_sekolah_full" data-raw="CREATE DATABASE db_sekolah;
+
+CREATE TABLE siswa (
+    id_siswa INT AUTO_INCREMENT PRIMARY KEY,
+    nis VARCHAR(20) UNIQUE,
+    nama VARCHAR(100) NOT NULL,
+    jenis_kelamin ENUM(&#x27;L&#x27;,&#x27;P&#x27;),
+    tanggal_lahir DATE,
+    alamat TEXT,
+    tahun_masuk YEAR
+);
+
+CREATE TABLE kelas (
+    id_kelas INT AUTO_INCREMENT PRIMARY KEY,
+    nama_kelas VARCHAR(20),
+    wali_kelas VARCHAR(100)
+);
+
+CREATE TABLE siswa_kelas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT,
+    id_kelas INT,
+    tahun_ajaran VARCHAR(9),
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas)
+);
+
+CREATE TABLE mata_pelajaran (
+    id_mapel INT AUTO_INCREMENT PRIMARY KEY,
+    nama_mapel VARCHAR(100)
+);
+
+CREATE TABLE nilai (
+    id_nilai INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT,
+    id_mapel INT,
+    semester INT,
+    nilai_angka DECIMAL(5,2),
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_mapel) REFERENCES mata_pelajaran(id_mapel)
+);
+
+CREATE TABLE buku (
+    id_buku INT AUTO_INCREMENT PRIMARY KEY,
+    judul VARCHAR(150),
+    penulis VARCHAR(100),
+    tahun_terbit YEAR,
+    stok INT
+);
+
+CREATE TABLE peminjaman (
+    id_pinjam INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT,
+    id_buku INT,
+    tanggal_pinjam DATE,
+    tanggal_kembali DATE,
+    status VARCHAR(20),
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_buku) REFERENCES buku(id_buku)
+);
+
+INSERT INTO siswa (nis, nama, jenis_kelamin, tanggal_lahir, alamat, tahun_masuk) VALUES
+(&#x27;S001&#x27;,&#x27;Ahmad Rizky&#x27;,&#x27;L&#x27;,&#x27;2008-01-12&#x27;,&#x27;Jakarta&#x27;,2023),
+(&#x27;S002&#x27;,&#x27;Siti Aisyah&#x27;,&#x27;P&#x27;,&#x27;2008-03-22&#x27;,&#x27;Jakarta&#x27;,2023),
+(&#x27;S003&#x27;,&#x27;Budi Santoso&#x27;,&#x27;L&#x27;,&#x27;2007-11-10&#x27;,&#x27;Depok&#x27;,2022),
+(&#x27;S004&#x27;,&#x27;Dewi Lestari&#x27;,&#x27;P&#x27;,&#x27;2008-05-17&#x27;,&#x27;Bogor&#x27;,2023),
+(&#x27;S005&#x27;,&#x27;Rian Pratama&#x27;,&#x27;L&#x27;,&#x27;2007-09-02&#x27;,&#x27;Bekasi&#x27;,2022),
+(&#x27;S006&#x27;,&#x27;Nabila Putri&#x27;,&#x27;P&#x27;,&#x27;2008-07-19&#x27;,&#x27;Jakarta&#x27;,2023),
+(&#x27;S007&#x27;,&#x27;Fajar Nugroho&#x27;,&#x27;L&#x27;,&#x27;2007-12-30&#x27;,&#x27;Tangerang&#x27;,2022),
+(&#x27;S008&#x27;,&#x27;Maya Sari&#x27;,&#x27;P&#x27;,&#x27;2008-02-14&#x27;,&#x27;Depok&#x27;,2023),
+(&#x27;S009&#x27;,&#x27;Yoga Saputra&#x27;,&#x27;L&#x27;,&#x27;2007-06-25&#x27;,&#x27;Bekasi&#x27;,2022),
+(&#x27;S010&#x27;,&#x27;Intan Permata&#x27;,&#x27;P&#x27;,&#x27;2008-10-11&#x27;,&#x27;Bogor&#x27;,2023);
+
+INSERT INTO kelas (nama_kelas, wali_kelas) VALUES
+(&#x27;X IPA 1&#x27;,&#x27;Pak Andi&#x27;),
+(&#x27;X IPA 2&#x27;,&#x27;Bu Rina&#x27;),
+(&#x27;XI IPA 1&#x27;,&#x27;Pak Budi&#x27;),
+(&#x27;XI IPS 1&#x27;,&#x27;Bu Sari&#x27;),
+(&#x27;XII IPA 1&#x27;,&#x27;Pak Joko&#x27;);
+
+INSERT INTO siswa_kelas (id_siswa, id_kelas, tahun_ajaran) VALUES
+(1,1,&#x27;2023/2024&#x27;),
+(2,1,&#x27;2023/2024&#x27;),
+(3,3,&#x27;2023/2024&#x27;),
+(4,2,&#x27;2023/2024&#x27;),
+(5,3,&#x27;2023/2024&#x27;),
+(6,2,&#x27;2023/2024&#x27;),
+(7,4,&#x27;2023/2024&#x27;),
+(8,1,&#x27;2023/2024&#x27;),
+(9,5,&#x27;2023/2024&#x27;),
+(10,2,&#x27;2023/2024&#x27;);
+
+INSERT INTO mata_pelajaran (nama_mapel) VALUES
+(&#x27;Matematika&#x27;),
+(&#x27;Bahasa Indonesia&#x27;),
+(&#x27;Bahasa Inggris&#x27;),
+(&#x27;Fisika&#x27;),
+(&#x27;Kimia&#x27;),
+(&#x27;Sejarah&#x27;);
+
+INSERT INTO nilai (id_siswa, id_mapel, semester, nilai_angka) VALUES
+(1,1,1,88),
+(1,2,1,90),
+(2,1,1,85),
+(3,4,1,78),
+(4,5,1,92),
+(5,1,1,70),
+(6,3,1,89),
+(7,6,1,75),
+(8,2,1,95),
+(9,4,1,80);
+
+INSERT INTO buku (judul, penulis, tahun_terbit, stok) VALUES
+(&#x27;Algoritma Dasar&#x27;,&#x27;Eko Prasetyo&#x27;,2020,5),
+(&#x27;Fisika SMA&#x27;,&#x27;Bambang S&#x27;,2019,4),
+(&#x27;Sejarah Indonesia&#x27;,&#x27;Ratna Dewi&#x27;,2018,6),
+(&#x27;Bahasa Inggris Aktif&#x27;,&#x27;John Doe&#x27;,2021,3),
+(&#x27;Matematika Cepat&#x27;,&#x27;Andi Wijaya&#x27;,2022,7);
+
+INSERT INTO peminjaman (id_siswa, id_buku, tanggal_pinjam, tanggal_kembali, status) VALUES
+(1,1,&#x27;2024-01-10&#x27;,&#x27;2024-01-17&#x27;,&#x27;Kembali&#x27;),
+(2,3,&#x27;2024-01-12&#x27;,&#x27;2024-01-19&#x27;,&#x27;Kembali&#x27;),
+(3,2,&#x27;2024-01-15&#x27;,NULL,&#x27;Dipinjam&#x27;),
+(4,5,&#x27;2024-01-18&#x27;,&#x27;2024-01-25&#x27;,&#x27;Kembali&#x27;),
+(5,4,&#x27;2024-01-20&#x27;,NULL,&#x27;Dipinjam&#x27;);"><code>CREATE DATABASE db_sekolah;
+
+CREATE TABLE siswa (
+    id_siswa INT AUTO_INCREMENT PRIMARY KEY,
+    nis VARCHAR(20) UNIQUE,
+    nama VARCHAR(100) NOT NULL,
+    jenis_kelamin ENUM(&#x27;L&#x27;,&#x27;P&#x27;),
+    tanggal_lahir DATE,
+    alamat TEXT,
+    tahun_masuk YEAR
+);
+
+CREATE TABLE kelas (
+    id_kelas INT AUTO_INCREMENT PRIMARY KEY,
+    nama_kelas VARCHAR(20),
+    wali_kelas VARCHAR(100)
+);
+
+CREATE TABLE siswa_kelas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT,
+    id_kelas INT,
+    tahun_ajaran VARCHAR(9),
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas)
+);
+
+CREATE TABLE mata_pelajaran (
+    id_mapel INT AUTO_INCREMENT PRIMARY KEY,
+    nama_mapel VARCHAR(100)
+);
+
+CREATE TABLE nilai (
+    id_nilai INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT,
+    id_mapel INT,
+    semester INT,
+    nilai_angka DECIMAL(5,2),
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_mapel) REFERENCES mata_pelajaran(id_mapel)
+);
+
+CREATE TABLE buku (
+    id_buku INT AUTO_INCREMENT PRIMARY KEY,
+    judul VARCHAR(150),
+    penulis VARCHAR(100),
+    tahun_terbit YEAR,
+    stok INT
+);
+
+CREATE TABLE peminjaman (
+    id_pinjam INT AUTO_INCREMENT PRIMARY KEY,
+    id_siswa INT,
+    id_buku INT,
+    tanggal_pinjam DATE,
+    tanggal_kembali DATE,
+    status VARCHAR(20),
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_buku) REFERENCES buku(id_buku)
+);
+
+INSERT INTO siswa (nis, nama, jenis_kelamin, tanggal_lahir, alamat, tahun_masuk) VALUES
+(&#x27;S001&#x27;,&#x27;Ahmad Rizky&#x27;,&#x27;L&#x27;,&#x27;2008-01-12&#x27;,&#x27;Jakarta&#x27;,2023),
+(&#x27;S002&#x27;,&#x27;Siti Aisyah&#x27;,&#x27;P&#x27;,&#x27;2008-03-22&#x27;,&#x27;Jakarta&#x27;,2023),
+(&#x27;S003&#x27;,&#x27;Budi Santoso&#x27;,&#x27;L&#x27;,&#x27;2007-11-10&#x27;,&#x27;Depok&#x27;,2022),
+(&#x27;S004&#x27;,&#x27;Dewi Lestari&#x27;,&#x27;P&#x27;,&#x27;2008-05-17&#x27;,&#x27;Bogor&#x27;,2023),
+(&#x27;S005&#x27;,&#x27;Rian Pratama&#x27;,&#x27;L&#x27;,&#x27;2007-09-02&#x27;,&#x27;Bekasi&#x27;,2022),
+(&#x27;S006&#x27;,&#x27;Nabila Putri&#x27;,&#x27;P&#x27;,&#x27;2008-07-19&#x27;,&#x27;Jakarta&#x27;,2023),
+(&#x27;S007&#x27;,&#x27;Fajar Nugroho&#x27;,&#x27;L&#x27;,&#x27;2007-12-30&#x27;,&#x27;Tangerang&#x27;,2022),
+(&#x27;S008&#x27;,&#x27;Maya Sari&#x27;,&#x27;P&#x27;,&#x27;2008-02-14&#x27;,&#x27;Depok&#x27;,2023),
+(&#x27;S009&#x27;,&#x27;Yoga Saputra&#x27;,&#x27;L&#x27;,&#x27;2007-06-25&#x27;,&#x27;Bekasi&#x27;,2022),
+(&#x27;S010&#x27;,&#x27;Intan Permata&#x27;,&#x27;P&#x27;,&#x27;2008-10-11&#x27;,&#x27;Bogor&#x27;,2023);
+
+INSERT INTO kelas (nama_kelas, wali_kelas) VALUES
+(&#x27;X IPA 1&#x27;,&#x27;Pak Andi&#x27;),
+(&#x27;X IPA 2&#x27;,&#x27;Bu Rina&#x27;),
+(&#x27;XI IPA 1&#x27;,&#x27;Pak Budi&#x27;),
+(&#x27;XI IPS 1&#x27;,&#x27;Bu Sari&#x27;),
+(&#x27;XII IPA 1&#x27;,&#x27;Pak Joko&#x27;);
+
+INSERT INTO siswa_kelas (id_siswa, id_kelas, tahun_ajaran) VALUES
+(1,1,&#x27;2023/2024&#x27;),
+(2,1,&#x27;2023/2024&#x27;),
+(3,3,&#x27;2023/2024&#x27;),
+(4,2,&#x27;2023/2024&#x27;),
+(5,3,&#x27;2023/2024&#x27;),
+(6,2,&#x27;2023/2024&#x27;),
+(7,4,&#x27;2023/2024&#x27;),
+(8,1,&#x27;2023/2024&#x27;),
+(9,5,&#x27;2023/2024&#x27;),
+(10,2,&#x27;2023/2024&#x27;);
+
+INSERT INTO mata_pelajaran (nama_mapel) VALUES
+(&#x27;Matematika&#x27;),
+(&#x27;Bahasa Indonesia&#x27;),
+(&#x27;Bahasa Inggris&#x27;),
+(&#x27;Fisika&#x27;),
+(&#x27;Kimia&#x27;),
+(&#x27;Sejarah&#x27;);
+
+INSERT INTO nilai (id_siswa, id_mapel, semester, nilai_angka) VALUES
+(1,1,1,88),
+(1,2,1,90),
+(2,1,1,85),
+(3,4,1,78),
+(4,5,1,92),
+(5,1,1,70),
+(6,3,1,89),
+(7,6,1,75),
+(8,2,1,95),
+(9,4,1,80);
+
+INSERT INTO buku (judul, penulis, tahun_terbit, stok) VALUES
+(&#x27;Algoritma Dasar&#x27;,&#x27;Eko Prasetyo&#x27;,2020,5),
+(&#x27;Fisika SMA&#x27;,&#x27;Bambang S&#x27;,2019,4),
+(&#x27;Sejarah Indonesia&#x27;,&#x27;Ratna Dewi&#x27;,2018,6),
+(&#x27;Bahasa Inggris Aktif&#x27;,&#x27;John Doe&#x27;,2021,3),
+(&#x27;Matematika Cepat&#x27;,&#x27;Andi Wijaya&#x27;,2022,7);
+
+INSERT INTO peminjaman (id_siswa, id_buku, tanggal_pinjam, tanggal_kembali, status) VALUES
+(1,1,&#x27;2024-01-10&#x27;,&#x27;2024-01-17&#x27;,&#x27;Kembali&#x27;),
+(2,3,&#x27;2024-01-12&#x27;,&#x27;2024-01-19&#x27;,&#x27;Kembali&#x27;),
+(3,2,&#x27;2024-01-15&#x27;,NULL,&#x27;Dipinjam&#x27;),
+(4,5,&#x27;2024-01-18&#x27;,&#x27;2024-01-25&#x27;,&#x27;Kembali&#x27;),
+(5,4,&#x27;2024-01-20&#x27;,NULL,&#x27;Dipinjam&#x27;);</code></pre>
+
+      </div></div>
+    </div>
+    <div class="tab-pane fade" id="kuliah" role="tabpanel">
+      <div class="card shadow-sm"><div class="card-body">
+        <h5 class="fw-bold">db_kuliah</h5>
+        <p class="muted">Tempelkan SOURCE LENGKAP db_kuliah di blok berikut (CREATE DATABASE, CREATE TABLE, INSERT data).</p>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="db_kuliah_full">Copy</button>
+</div>
+<pre id="db_kuliah_full" data-raw="CREATE DATABASE db_kuliah;
+
+CREATE TABLE fakultas (
+    id_fakultas INT AUTO_INCREMENT PRIMARY KEY,
+    nama_fakultas VARCHAR(100)
+);
+
+CREATE TABLE jurusan (
+    id_jurusan INT AUTO_INCREMENT PRIMARY KEY,
+    id_fakultas INT,
+    nama_jurusan VARCHAR(100),
+    FOREIGN KEY (id_fakultas) REFERENCES fakultas(id_fakultas)
+);
+
+CREATE TABLE mahasiswa (
+    id_mahasiswa INT AUTO_INCREMENT PRIMARY KEY,
+    nim VARCHAR(20) UNIQUE,
+    nama VARCHAR(100),
+    jenis_kelamin ENUM(&#x27;L&#x27;,&#x27;P&#x27;),
+    tanggal_lahir DATE,
+    id_jurusan INT,
+    angkatan YEAR,
+    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan)
+);
+
+CREATE TABLE dosen (
+    id_dosen INT AUTO_INCREMENT PRIMARY KEY,
+    nama_dosen VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE mata_kuliah (
+    id_mk INT AUTO_INCREMENT PRIMARY KEY,
+    kode_mk VARCHAR(10),
+    nama_mk VARCHAR(100),
+    sks INT,
+    id_jurusan INT,
+    id_dosen INT,
+    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan),
+    FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen)
+);
+
+CREATE TABLE krs (
+    id_krs INT AUTO_INCREMENT PRIMARY KEY,
+    id_mahasiswa INT,
+    id_mk INT,
+    semester INT,
+    nilai CHAR(2),
+    FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa),
+    FOREIGN KEY (id_mk) REFERENCES mata_kuliah(id_mk)
+);
+
+INSERT INTO fakultas (nama_fakultas) VALUES
+(&#x27;Fakultas Ilmu Komputer&#x27;),
+(&#x27;Fakultas Ekonomi&#x27;),
+(&#x27;Fakultas Teknik&#x27;);
+
+INSERT INTO jurusan (id_fakultas, nama_jurusan) VALUES
+(1,&#x27;Teknik Informatika&#x27;),
+(1,&#x27;Sistem Informasi&#x27;),
+(2,&#x27;Manajemen&#x27;),
+(3,&#x27;Teknik Sipil&#x27;),
+(3,&#x27;Teknik Elektro&#x27;);
+
+INSERT INTO mahasiswa (nim, nama, jenis_kelamin, tanggal_lahir, id_jurusan, angkatan) VALUES
+(&#x27;22001&#x27;,&#x27;Andi Saputra&#x27;,&#x27;L&#x27;,&#x27;2004-01-10&#x27;,1,2022),
+(&#x27;22002&#x27;,&#x27;Siti Rahma&#x27;,&#x27;P&#x27;,&#x27;2004-05-12&#x27;,1,2022),
+(&#x27;22003&#x27;,&#x27;Budi Hartono&#x27;,&#x27;L&#x27;,&#x27;2003-08-22&#x27;,2,2021),
+(&#x27;22004&#x27;,&#x27;Dewi Anggraini&#x27;,&#x27;P&#x27;,&#x27;2004-02-18&#x27;,3,2022),
+(&#x27;22005&#x27;,&#x27;Rian Maulana&#x27;,&#x27;L&#x27;,&#x27;2003-12-09&#x27;,4,2021),
+(&#x27;22006&#x27;,&#x27;Nabila Sari&#x27;,&#x27;P&#x27;,&#x27;2004-04-27&#x27;,5,2022),
+(&#x27;22007&#x27;,&#x27;Fajar Hidayat&#x27;,&#x27;L&#x27;,&#x27;2003-06-15&#x27;,2,2021),
+(&#x27;22008&#x27;,&#x27;Maya Putri&#x27;,&#x27;P&#x27;,&#x27;2004-09-30&#x27;,3,2022),
+(&#x27;22009&#x27;,&#x27;Yoga Pratama&#x27;,&#x27;L&#x27;,&#x27;2003-11-11&#x27;,1,2021),
+(&#x27;22010&#x27;,&#x27;Intan Lestari&#x27;,&#x27;P&#x27;,&#x27;2004-07-21&#x27;,5,2022);
+
+INSERT INTO dosen (nama_dosen, email) VALUES
+(&#x27;Dr. Ahmad Fauzi&#x27;,&#x27;ahmad@kampus.ac.id&#x27;),
+(&#x27;Prof. Lina Marlina&#x27;,&#x27;lina@kampus.ac.id&#x27;),
+(&#x27;Rudi Hartono&#x27;,&#x27;rudi@kampus.ac.id&#x27;),
+(&#x27;Sari Wulandari&#x27;,&#x27;sari@kampus.ac.id&#x27;),
+(&#x27;Bambang Setiawan&#x27;,&#x27;bambang@kampus.ac.id&#x27;);
+
+INSERT INTO mata_kuliah (kode_mk, nama_mk, sks, id_jurusan, id_dosen) VALUES
+(&#x27;IF101&#x27;,&#x27;Algoritma&#x27;,3,1,1),
+(&#x27;IF102&#x27;,&#x27;Basis Data&#x27;,3,1,3),
+(&#x27;SI201&#x27;,&#x27;Analisis Sistem&#x27;,3,2,2),
+(&#x27;MN101&#x27;,&#x27;Manajemen Dasar&#x27;,2,3,4),
+(&#x27;TS101&#x27;,&#x27;Struktur Bangunan&#x27;,3,4,5),
+(&#x27;TE101&#x27;,&#x27;Rangkaian Listrik&#x27;,3,5,5);
+
+INSERT INTO krs (id_mahasiswa, id_mk, semester, nilai) VALUES
+(1,1,1,&#x27;A&#x27;),
+(1,2,1,&#x27;B&#x27;),
+(2,1,1,&#x27;A&#x27;),
+(3,3,3,&#x27;B&#x27;),
+(4,4,1,&#x27;A&#x27;),
+(5,5,3,&#x27;C&#x27;),
+(6,6,1,&#x27;B&#x27;),
+(7,3,3,&#x27;A&#x27;),
+(8,4,1,&#x27;A&#x27;),
+(9,2,3,&#x27;B&#x27;);"><code>CREATE DATABASE db_kuliah;
+
+CREATE TABLE fakultas (
+    id_fakultas INT AUTO_INCREMENT PRIMARY KEY,
+    nama_fakultas VARCHAR(100)
+);
+
+CREATE TABLE jurusan (
+    id_jurusan INT AUTO_INCREMENT PRIMARY KEY,
+    id_fakultas INT,
+    nama_jurusan VARCHAR(100),
+    FOREIGN KEY (id_fakultas) REFERENCES fakultas(id_fakultas)
+);
+
+CREATE TABLE mahasiswa (
+    id_mahasiswa INT AUTO_INCREMENT PRIMARY KEY,
+    nim VARCHAR(20) UNIQUE,
+    nama VARCHAR(100),
+    jenis_kelamin ENUM(&#x27;L&#x27;,&#x27;P&#x27;),
+    tanggal_lahir DATE,
+    id_jurusan INT,
+    angkatan YEAR,
+    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan)
+);
+
+CREATE TABLE dosen (
+    id_dosen INT AUTO_INCREMENT PRIMARY KEY,
+    nama_dosen VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE mata_kuliah (
+    id_mk INT AUTO_INCREMENT PRIMARY KEY,
+    kode_mk VARCHAR(10),
+    nama_mk VARCHAR(100),
+    sks INT,
+    id_jurusan INT,
+    id_dosen INT,
+    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan),
+    FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen)
+);
+
+CREATE TABLE krs (
+    id_krs INT AUTO_INCREMENT PRIMARY KEY,
+    id_mahasiswa INT,
+    id_mk INT,
+    semester INT,
+    nilai CHAR(2),
+    FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa),
+    FOREIGN KEY (id_mk) REFERENCES mata_kuliah(id_mk)
+);
+
+INSERT INTO fakultas (nama_fakultas) VALUES
+(&#x27;Fakultas Ilmu Komputer&#x27;),
+(&#x27;Fakultas Ekonomi&#x27;),
+(&#x27;Fakultas Teknik&#x27;);
+
+INSERT INTO jurusan (id_fakultas, nama_jurusan) VALUES
+(1,&#x27;Teknik Informatika&#x27;),
+(1,&#x27;Sistem Informasi&#x27;),
+(2,&#x27;Manajemen&#x27;),
+(3,&#x27;Teknik Sipil&#x27;),
+(3,&#x27;Teknik Elektro&#x27;);
+
+INSERT INTO mahasiswa (nim, nama, jenis_kelamin, tanggal_lahir, id_jurusan, angkatan) VALUES
+(&#x27;22001&#x27;,&#x27;Andi Saputra&#x27;,&#x27;L&#x27;,&#x27;2004-01-10&#x27;,1,2022),
+(&#x27;22002&#x27;,&#x27;Siti Rahma&#x27;,&#x27;P&#x27;,&#x27;2004-05-12&#x27;,1,2022),
+(&#x27;22003&#x27;,&#x27;Budi Hartono&#x27;,&#x27;L&#x27;,&#x27;2003-08-22&#x27;,2,2021),
+(&#x27;22004&#x27;,&#x27;Dewi Anggraini&#x27;,&#x27;P&#x27;,&#x27;2004-02-18&#x27;,3,2022),
+(&#x27;22005&#x27;,&#x27;Rian Maulana&#x27;,&#x27;L&#x27;,&#x27;2003-12-09&#x27;,4,2021),
+(&#x27;22006&#x27;,&#x27;Nabila Sari&#x27;,&#x27;P&#x27;,&#x27;2004-04-27&#x27;,5,2022),
+(&#x27;22007&#x27;,&#x27;Fajar Hidayat&#x27;,&#x27;L&#x27;,&#x27;2003-06-15&#x27;,2,2021),
+(&#x27;22008&#x27;,&#x27;Maya Putri&#x27;,&#x27;P&#x27;,&#x27;2004-09-30&#x27;,3,2022),
+(&#x27;22009&#x27;,&#x27;Yoga Pratama&#x27;,&#x27;L&#x27;,&#x27;2003-11-11&#x27;,1,2021),
+(&#x27;22010&#x27;,&#x27;Intan Lestari&#x27;,&#x27;P&#x27;,&#x27;2004-07-21&#x27;,5,2022);
+
+INSERT INTO dosen (nama_dosen, email) VALUES
+(&#x27;Dr. Ahmad Fauzi&#x27;,&#x27;ahmad@kampus.ac.id&#x27;),
+(&#x27;Prof. Lina Marlina&#x27;,&#x27;lina@kampus.ac.id&#x27;),
+(&#x27;Rudi Hartono&#x27;,&#x27;rudi@kampus.ac.id&#x27;),
+(&#x27;Sari Wulandari&#x27;,&#x27;sari@kampus.ac.id&#x27;),
+(&#x27;Bambang Setiawan&#x27;,&#x27;bambang@kampus.ac.id&#x27;);
+
+INSERT INTO mata_kuliah (kode_mk, nama_mk, sks, id_jurusan, id_dosen) VALUES
+(&#x27;IF101&#x27;,&#x27;Algoritma&#x27;,3,1,1),
+(&#x27;IF102&#x27;,&#x27;Basis Data&#x27;,3,1,3),
+(&#x27;SI201&#x27;,&#x27;Analisis Sistem&#x27;,3,2,2),
+(&#x27;MN101&#x27;,&#x27;Manajemen Dasar&#x27;,2,3,4),
+(&#x27;TS101&#x27;,&#x27;Struktur Bangunan&#x27;,3,4,5),
+(&#x27;TE101&#x27;,&#x27;Rangkaian Listrik&#x27;,3,5,5);
+
+INSERT INTO krs (id_mahasiswa, id_mk, semester, nilai) VALUES
+(1,1,1,&#x27;A&#x27;),
+(1,2,1,&#x27;B&#x27;),
+(2,1,1,&#x27;A&#x27;),
+(3,3,3,&#x27;B&#x27;),
+(4,4,1,&#x27;A&#x27;),
+(5,5,3,&#x27;C&#x27;),
+(6,6,1,&#x27;B&#x27;),
+(7,3,3,&#x27;A&#x27;),
+(8,4,1,&#x27;A&#x27;),
+(9,2,3,&#x27;B&#x27;);</code></pre>
+
+      </div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info mt-3">
+    <strong>Catatan:</strong> Website ini bersifat statis untuk GitHub Pages. Jadi, cukup tempelkan source SQL sebelum publish.
+  </div>
+</section>
+
+</main>
+<footer class="container pb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3 gap-2">
+    <small class="muted">Didesain untuk GitHub Pages (statis).</small>
+    <small class="muted">© 2026 • Ringkasan modul + latihan</small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

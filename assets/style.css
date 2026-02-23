@@ -1,0 +1,64 @@
+
+:root{ --brand:#2563eb; --brand2:#06b6d4; }
+body{
+  background: radial-gradient(1100px 520px at 12% 0%, rgba(37,99,235,.08), transparent 55%),
+              radial-gradient(900px 480px at 92% 18%, rgba(6,182,212,.08), transparent 58%),
+              #f8fafc;
+}
+.navbar{ backdrop-filter: blur(10px); }
+.hero{
+  border:1px solid rgba(15,23,42,.12);
+  background: linear-gradient(135deg, rgba(37,99,235,.12), rgba(6,182,212,.10));
+  border-radius: 1.25rem;
+}
+.card{ border-radius: 1.25rem; }
+pre{
+  background:#0b1220;
+  color:#e5e7eb;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border:1px solid rgba(255,255,255,.08);
+  overflow:auto;
+  margin:0;
+}
+code{ color: inherit; }
+.badge-soft{
+  background: rgba(37,99,235,.10);
+  border: 1px solid rgba(37,99,235,.22);
+  color:#1e3a8a;
+}
+.badge-soft2{
+  background: rgba(6,182,212,.10);
+  border: 1px solid rgba(6,182,212,.22);
+  color:#0e7490;
+}
+small.muted{ color: rgba(15,23,42,.7); }
+.section-title{ letter-spacing:.2px; }
+.copy-btn{ border-radius: 999px; }
+footer{ color: rgba(15,23,42,.75); }
+
+/* ===== Exercise layout (rapi) ===== */
+.exercise-head{
+  display:flex; flex-wrap:wrap; gap:.5rem;
+  align-items:flex-start; justify-content:space-between;
+}
+.exercise-meta{
+  display:flex; flex-wrap:wrap; gap:.5rem;
+}
+.exercise-card{
+  border:1px solid rgba(15,23,42,.10);
+  border-radius: 1.25rem;
+  background: rgba(255,255,255,.92);
+}
+.exercise-card .card-header{
+  background: rgba(37,99,235,.06);
+  border-bottom: 1px solid rgba(15,23,42,.08);
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+}
+.exercise-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+.checklist li{ margin-bottom:.35rem; }

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul 4 — Form &amp; CRUD</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white bg-opacity-75 border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-black" href="index.html">Rangkuman Modul 1–5</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="modul1.html">Modul 1 • SQL Dasar</a></li><li class="nav-item"><a class="nav-link" href="modul2.html">Modul 2 • Agregat</a></li><li class="nav-item"><a class="nav-link" href="modul3.html">Modul 3 • Relasi & Join</a></li><li class="nav-item"><a class="nav-link active fw-bold" href="modul4.html">Modul 4 • Form & CRUD</a></li><li class="nav-item"><a class="nav-link" href="modul5.html">Modul 5 • Session & Login</a></li><li class="nav-item"><a class="nav-link" href="latihan-ujian.html">Latihan Ujian</a></li>
+        <li class="nav-item"><a class="nav-link" href="lampiran-db.html">Lampiran • DB</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+
+<section class="hero p-4 p-lg-5">
+  <h1 class="h2 fw-black mb-2 section-title">Modul 4 — Pemrosesan Form & CRUD (Create, Read, Update, Delete)</h1>
+  <p class="mb-0">
+    Modul ini melatih kalian menerima input dari form HTML dan memprosesnya di PHP.
+    Kalian akan memakai metode <code>GET</code> (<em>mengirim data lewat URL</em>) dan <code>POST</code> (<em>mengirim data lewat body request</em>), lalu membaca nilainya dengan <code>$_GET</code>, <code>$_POST</code>, atau <code>$_REQUEST</code>.
+  </p>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Kamus Istilah (Modul 4)</h5>
+      <p class="muted mb-3">Ini istilah web yang harus kalian hafal artinya, bukan hafal kodenya.</p>
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>HTTP</strong> = <em>HyperText Transfer Protocol</em> → aturan komunikasi browser ↔ server.</li>
+            <li><strong>GET</strong> = metode HTTP untuk mengirim data lewat URL (query string).</li>
+            <li><strong>POST</strong> = metode HTTP untuk mengirim data lewat body request.</li>
+            <li><strong>PHP</strong> = <em>PHP: Hypertext Preprocessor</em> → bahasa server-side untuk memproses request.</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>CRUD</strong> = <em>Create, Read, Update, Delete</em> → 4 operasi dasar data.</li>
+            <li><strong>$_GET</strong> = variabel superglobal PHP untuk data GET.</li>
+            <li><strong>$_POST</strong> = variabel superglobal PHP untuk data POST.</li>
+            <li><strong>$_REQUEST</strong> = gabungan GET+POST (dipakai seperlunya).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Bedah Kode Form (HTML + PHP) — fungsi tiap bagian</h5>
+      <p class="mb-3">
+        Sekarang saya jelaskan bagian-bagian kode form supaya kalian paham, bukan sekadar menyalin.
+        Perhatikan: ketika kalian membuat form, ada bagian <strong>HTML</strong> (tampil di browser) dan ada bagian <strong>PHP</strong> (diproses server).
+      </p>
+
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h6 class="fw-bold">A) Bagian HTML Form</h6>
+              <ul class="mb-0">
+                <li><code>&lt;form&gt;</code>: wadah input. Di sinilah kalian menentukan <strong>method</strong> dan <strong>action</strong>.</li>
+                <li><code>method="get"</code>: nilai input dikirim lewat URL (terlihat di address bar).</li>
+                <li><code>method="post"</code>: nilai input dikirim lewat body request (tidak terlihat di URL).</li>
+                <li><code>action="..."</code>: menentukan file tujuan yang memproses data form.</li>
+                <li><code>&lt;input name="nama"&gt;</code>: <strong>name</strong> adalah “kunci” untuk mengambil nilai di PHP.</li>
+                <li><code>&lt;input type="submit"&gt;</code>: tombol untuk mengirim form.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h6 class="fw-bold">B) Bagian PHP Pemrosesan</h6>
+              <ul class="mb-0">
+                <li><code>$_GET</code>: tempat data form yang dikirim dengan GET.</li>
+                <li><code>$_POST</code>: tempat data form yang dikirim dengan POST.</li>
+                <li><code>isset(...)</code>: mengecek apakah suatu data sudah ada/terisi (menghindari error).</li>
+                <li><code>echo</code>: menampilkan output ke browser.</li>
+                <li><code>$_SERVER['PHP_SELF']</code>: menghasilkan nama file saat ini (form diproses oleh file yang sama).</li>
+                <li><code>$_SERVER['REQUEST_METHOD']</code>: memberi tahu metode yang dipakai (GET atau POST).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info mt-3 mb-0">
+        <strong>Catatan kebiasaan baik:</strong> Pastikan setiap input punya atribut <code>name</code>. Tanpa <code>name</code>, nilai tidak akan terbaca di PHP.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="mt-4">
+  <div class="row g-3">
+    <div class="col-lg-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="fw-bold">1) GET vs POST</h5>
+      <ul class="mb-0">
+        <li><strong>GET</strong>: data terlihat di URL, cocok untuk pencarian.</li>
+        <li><strong>POST</strong>: data tidak tampil di URL, cocok untuk form yang lebih “sensitif”.</li>
+      </ul>
+      <small class="muted d-block mt-2">Keduanya bisa dibaca lewat <code>$_REQUEST</code>.</small>
+    </div></div></div>
+    <div class="col-lg-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="fw-bold">2) Prefilling</h5>
+      <p class="mb-0">Setelah submit, nilai input biasanya kosong lagi. Prefilling menjaga nilai tetap tampil.</p>
+    </div></div></div>
+  </div>
+</section>
+
+<section class="mt-4">
+  <div class="card shadow-sm"><div class="card-body">
+    <h5 class="fw-bold">Contoh Praktik</h5>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <h6 class="fw-bold">A) Form GET</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m4_get">Copy</button>
+</div>
+<pre id="m4_get" data-raw="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Metode GET&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;&lt;?php $_SERVER[&#x27;PHP_SELF&#x27;];?&gt;&quot; method=&quot;get&quot;&gt;
+  Nama &lt;input type=&quot;text&quot; name=&quot;nama&quot; /&gt; &lt;br /&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;OK&quot; /&gt;
+&lt;/form&gt;
+&lt;?php
+if (isset($_GET[&#x27;nama&#x27;])) {
+  echo &#x27;Hallo, &#x27; . $_GET[&#x27;nama&#x27;];
+}
+?&gt;
+&lt;/body&gt;
+&lt;/html&gt;"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Metode GET&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;&lt;?php $_SERVER[&#x27;PHP_SELF&#x27;];?&gt;&quot; method=&quot;get&quot;&gt;
+  Nama &lt;input type=&quot;text&quot; name=&quot;nama&quot; /&gt; &lt;br /&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;OK&quot; /&gt;
+&lt;/form&gt;
+&lt;?php
+if (isset($_GET[&#x27;nama&#x27;])) {
+  echo &#x27;Hallo, &#x27; . $_GET[&#x27;nama&#x27;];
+}
+?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      </div>
+      <div class="col-lg-6">
+        <h6 class="fw-bold">B) Form POST</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m4_post">Copy</button>
+</div>
+<pre id="m4_post" data-raw="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Metode POST&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;&lt;?php $_SERVER[&#x27;PHP_SELF&#x27;];?&gt;&quot; method=&quot;post&quot;&gt;
+  Nama &lt;input type=&quot;text&quot; name=&quot;nama&quot; /&gt; &lt;br /&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;OK&quot; /&gt;
+&lt;/form&gt;
+&lt;?php
+if (isset($_POST[&#x27;nama&#x27;])) {
+  echo &#x27;Hallo, &#x27; . $_POST[&#x27;nama&#x27;];
+}
+?&gt;
+&lt;/body&gt;
+&lt;/html&gt;"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Metode POST&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;&lt;?php $_SERVER[&#x27;PHP_SELF&#x27;];?&gt;&quot; method=&quot;post&quot;&gt;
+  Nama &lt;input type=&quot;text&quot; name=&quot;nama&quot; /&gt; &lt;br /&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;OK&quot; /&gt;
+&lt;/form&gt;
+&lt;?php
+if (isset($_POST[&#x27;nama&#x27;])) {
+  echo &#x27;Hallo, &#x27; . $_POST[&#x27;nama&#x27;];
+}
+?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      </div>
+      <div class="col-lg-12">
+        <h6 class="fw-bold mt-2">C) Identifikasi metode + $_REQUEST</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m4_request">Copy</button>
+</div>
+<pre id="m4_request" data-raw="&lt;?php
+if (isset($_REQUEST[&#x27;nama&#x27;])) {
+  echo &#x27;Metode: &#x27; . $_SERVER[&#x27;REQUEST_METHOD&#x27;];
+}
+?&gt;"><code>&lt;?php
+if (isset($_REQUEST[&#x27;nama&#x27;])) {
+  echo &#x27;Metode: &#x27; . $_SERVER[&#x27;REQUEST_METHOD&#x27;];
+}
+?&gt;</code></pre>
+
+      </div>
+    </div>
+  </div></div>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm exercise-card">
+    <div class="card-header py-3 px-3 px-lg-4">
+      <div class="exercise-head">
+        <div>
+          <h5 class="fw-bold mb-1">Latihan (Modul 4)</h5>
+          <small class="muted">Kerjakan di <strong>db_kuliah</strong>. Tulis query rapi (baris baru + indent) dan simpan hasilnya.</small>
+        </div>
+        <div class="exercise-meta">
+          <span class="badge badge-soft rounded-pill px-3 py-2">Estimasi 45 menit</span>
+          <span class="badge badge-soft2 rounded-pill px-3 py-2">Wajib screenshot output</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-3 p-lg-4">
+      <div class="row g-3">
+        <div class="col-lg-5">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Instruksi pengerjaan</h6>
+              <ol class="mb-0 checklist">
+                <li><strong>Pilih database</strong>: jalankan <code>USE db_kuliah;</code> (atau pilih dari phpMyAdmin).</li>
+                <li><strong>Tulis query</strong> dulu di catatan, lalu jalankan di phpMyAdmin (tab SQL).</li>
+                <li><strong>Pastikan benar</strong>: cek nama kolom, tanda petik, dan hasil output.</li>
+                <li><strong>Simpan bukti</strong>: screenshot query + tabel hasilnya.</li>
+                <li><strong>Kumpulkan</strong>: file PDF/Doc berisi jawaban (nomor + query + screenshot).</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Soal latihan</h6>
+              
+<div class="exercise-grid mt-2">
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 1 — GET vs POST</div>
+      <ol class="mb-0">
+        <li>Buat <code>form_get.php</code>: input nama + submit (method GET).</li>
+        <li>Buat <code>form_post.php</code>: input nama + submit (method POST).</li>
+        <li>Uji di browser: catat perbedaan tampilan data di URL.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 2 — Prefilling</div>
+      <ol class="mb-0">
+        <li>Buat form POST yang setelah submit, nilai input tetap muncul (prefill).</li>
+        <li>Tampilkan pesan: “Halo, [nama]”.</li>
+        <li>Gunakan <code>isset()</code> agar tidak error saat halaman pertama dibuka.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 3 — Mini CRUD (db_kuliah)</div>
+      <ol class="mb-0">
+        <li>Buat form tambah data sederhana ke tabel <code>mahasiswa</code> (Create).</li>
+        <li>Buat halaman daftar mahasiswa (Read).</li>
+        <li>(Opsional) Tambahkan tombol hapus 1 data (Delete) dengan parameter id.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="alert alert-warning mt-3 mb-0">
+  <strong>Pengumpulan:</strong> kirim 3 file PHP + screenshot hasil uji (URL GET, hasil POST, dan data masuk ke database bila CRUD dikerjakan).
+</div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 alert alert-info mb-0">
+        <strong>Catatan guru:</strong> Jika hasil kosong, cek lagi syaratnya. Bisa jadi datanya memang tidak memenuhi kondisi.
+        Kalian boleh menyesuaikan angka batas (misal 80, 85) asal logikanya tetap benar.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="container pb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3 gap-2">
+    <small class="muted">Didesain untuk GitHub Pages (statis).</small>
+    <small class="muted">© 2026 • Ringkasan modul + latihan</small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

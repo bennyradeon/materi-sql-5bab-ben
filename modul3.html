@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul 3 — Relasi &amp; Join</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white bg-opacity-75 border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-black" href="index.html">Rangkuman Modul 1–5</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="modul1.html">Modul 1 • SQL Dasar</a></li><li class="nav-item"><a class="nav-link" href="modul2.html">Modul 2 • Agregat</a></li><li class="nav-item"><a class="nav-link active fw-bold" href="modul3.html">Modul 3 • Relasi & Join</a></li><li class="nav-item"><a class="nav-link" href="modul4.html">Modul 4 • Form & CRUD</a></li><li class="nav-item"><a class="nav-link" href="modul5.html">Modul 5 • Session & Login</a></li><li class="nav-item"><a class="nav-link" href="latihan-ujian.html">Latihan Ujian</a></li>
+        <li class="nav-item"><a class="nav-link" href="lampiran-db.html">Lampiran • DB</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+
+<section class="hero p-4 p-lg-5">
+  <h1 class="h2 fw-black mb-2 section-title">Modul 3 — Relasi, Join, dan Union</h1>
+  <p class="mb-0">
+    Di modul ini kalian belajar mengambil data dari lebih dari satu tabel.
+    Hubungan antar tabel dibangun lewat kunci (primary key) dan kunci tamu (foreign key).
+  </p>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Kamus Istilah (Modul 3)</h5>
+      <p class="muted mb-3">Modul join sering diuji karena menilai pemahaman relasi antar tabel.</p>
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>RELATIONSHIP</strong> = hubungan antar tabel (dibangun dengan PK–FK).</li>
+            <li><strong>JOIN</strong> = menggabungkan data dari 2+ tabel berdasarkan kolom yang berelasi.</li>
+            <li><strong>INNER JOIN</strong> = hanya data yang cocok di kedua tabel.</li>
+            <li><strong>LEFT JOIN</strong> = semua data kiri tampil, yang tidak cocok kanan menjadi NULL.</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>RIGHT JOIN</strong> = semua data kanan tampil, yang tidak cocok kiri menjadi NULL.</li>
+            <li><strong>NULL</strong> = nilai kosong/tidak ada data (bukan 0 dan bukan string kosong).</li>
+            <li><strong>UNION</strong> = menggabungkan hasil 2 query, duplikat dihapus.</li>
+            <li><strong>UNION ALL</strong> = menggabungkan hasil 2 query, duplikat tetap tampil.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="mt-4">
+
+<div class="card shadow-sm"><div class="card-body">
+  <h5 class="fw-bold">Materi yang sering muncul</h5>
+  <ul class="mb-0">
+    <li>INNER JOIN vs LEFT JOIN vs RIGHT JOIN.</li>
+    <li>NULL pada hasil OUTER JOIN.</li>
+    <li>UNION vs UNION ALL.</li>
+    <li>Alias tabel untuk merapikan query.</li>
+  </ul>
+</div></div>
+
+</section>
+
+<section class="mt-4">
+  <div class="row g-3">
+    <div class="col-lg-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="fw-bold">1) Inner Join</h5>
+      <p class="mb-0">
+        Inner join menampilkan data yang cocok di kedua tabel (irisan). Kalian bisa menulis join eksplisit atau implisit.
+      </p>
+    </div></div></div>
+    <div class="col-lg-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="fw-bold">2) Outer Join</h5>
+      <p class="mb-0">
+        Outer join tetap menampilkan data dari salah satu sisi meski tidak ada pasangan. Sisi yang tidak cocok akan menjadi <code>NULL</code>.
+      </p>
+    </div></div></div>
+  </div>
+</section>
+
+<section class="mt-4">
+  <div class="card shadow-sm"><div class="card-body">
+    <h5 class="fw-bold">Contoh Praktik</h5>
+    <p class="muted mb-3">Contoh latihan siswa gunakan db_kuliah: mahasiswa–jurusan–fakultas dan krs–mata_kuliah–dosen.</p>
+
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <h6 class="fw-bold">A) Inner Join (eksplisit)</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m3_inner">Copy</button>
+</div>
+<pre id="m3_inner" data-raw="-- INNER JOIN: menggabungkan siswa + kelas (yang punya pasangan)
+
+SELECT s.nis, s.nama, k.nama_kelas, sk.tahun_ajaran
+FROM siswa s
+INNER JOIN siswa_kelas sk ON s.id_siswa = sk.id_siswa
+INNER JOIN kelas k ON sk.id_kelas = k.id_kelas
+ORDER BY k.nama_kelas, s.nama;"><code>-- INNER JOIN: menggabungkan siswa + kelas (yang punya pasangan)
+
+SELECT s.nis, s.nama, k.nama_kelas, sk.tahun_ajaran
+FROM siswa s
+INNER JOIN siswa_kelas sk ON s.id_siswa = sk.id_siswa
+INNER JOIN kelas k ON sk.id_kelas = k.id_kelas
+ORDER BY k.nama_kelas, s.nama;</code></pre>
+
+      </div>
+      <div class="col-lg-6">
+        <h6 class="fw-bold">B) Inner Join (implisit)</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m3_inner_impl">Copy</button>
+</div>
+<pre id="m3_inner_impl" data-raw="-- JOIN gaya lama (implisit) — hasilnya sama, tapi kurang rapi
+
+SELECT s.nis, s.nama, k.nama_kelas, sk.tahun_ajaran
+FROM siswa s, siswa_kelas sk, kelas k
+WHERE s.id_siswa = sk.id_siswa
+  AND sk.id_kelas = k.id_kelas
+ORDER BY k.nama_kelas, s.nama;"><code>-- JOIN gaya lama (implisit) — hasilnya sama, tapi kurang rapi
+
+SELECT s.nis, s.nama, k.nama_kelas, sk.tahun_ajaran
+FROM siswa s, siswa_kelas sk, kelas k
+WHERE s.id_siswa = sk.id_siswa
+  AND sk.id_kelas = k.id_kelas
+ORDER BY k.nama_kelas, s.nama;</code></pre>
+
+      </div>
+      <div class="col-lg-6">
+        <h6 class="fw-bold mt-2">C) Left Join</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m3_left">Copy</button>
+</div>
+<pre id="m3_left" data-raw="-- LEFT JOIN: semua siswa tetap tampil, meskipun belum pernah meminjam buku
+-- Jika belum pernah meminjam, kolom peminjaman/buku akan bernilai NULL.
+
+SELECT s.nis, s.nama, p.id_pinjam, p.status
+FROM siswa s
+LEFT JOIN peminjaman p ON s.id_siswa = p.id_siswa
+ORDER BY s.nama;"><code>-- LEFT JOIN: semua siswa tetap tampil, meskipun belum pernah meminjam buku
+-- Jika belum pernah meminjam, kolom peminjaman/buku akan bernilai NULL.
+
+SELECT s.nis, s.nama, p.id_pinjam, p.status
+FROM siswa s
+LEFT JOIN peminjaman p ON s.id_siswa = p.id_siswa
+ORDER BY s.nama;</code></pre>
+
+      </div>
+      <div class="col-lg-6">
+        <h6 class="fw-bold mt-2">D) Right Join</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m3_right">Copy</button>
+</div>
+<pre id="m3_right" data-raw="-- RIGHT JOIN: semua peminjaman tetap tampil (walau kasus siswa hilang jarang terjadi)
+
+SELECT p.id_pinjam, s.nama, p.tanggal_pinjam, p.status
+FROM siswa s
+RIGHT JOIN peminjaman p ON s.id_siswa = p.id_siswa
+ORDER BY p.tanggal_pinjam DESC;"><code>-- RIGHT JOIN: semua peminjaman tetap tampil (walau kasus siswa hilang jarang terjadi)
+
+SELECT p.id_pinjam, s.nama, p.tanggal_pinjam, p.status
+FROM siswa s
+RIGHT JOIN peminjaman p ON s.id_siswa = p.id_siswa
+ORDER BY p.tanggal_pinjam DESC;</code></pre>
+
+      </div>
+      <div class="col-lg-12">
+        <h6 class="fw-bold mt-2">E) UNION vs UNION ALL</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m3_union">Copy</button>
+</div>
+<pre id="m3_union" data-raw="-- UNION: menggabungkan dua daftar dengan format kolom yang sama
+
+-- Daftar &#x27;nama orang&#x27; di sekolah: nama siswa + wali kelas
+SELECT nama AS nama_orang
+FROM siswa
+UNION
+SELECT wali_kelas AS nama_orang
+FROM kelas
+ORDER BY nama_orang;"><code>-- UNION: menggabungkan dua daftar dengan format kolom yang sama
+
+-- Daftar &#x27;nama orang&#x27; di sekolah: nama siswa + wali kelas
+SELECT nama AS nama_orang
+FROM siswa
+UNION
+SELECT wali_kelas AS nama_orang
+FROM kelas
+ORDER BY nama_orang;</code></pre>
+
+        <div class="alert alert-warning mt-3 mb-0">
+          <strong>Catatan:</strong> UNION menghapus duplikat, UNION ALL menampilkan semua termasuk duplikat.
+          Jumlah kolom dan tipe data harus sesuai.
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm exercise-card">
+    <div class="card-header py-3 px-3 px-lg-4">
+      <div class="exercise-head">
+        <div>
+          <h5 class="fw-bold mb-1">Latihan (Modul 3)</h5>
+          <small class="muted">Kerjakan di <strong>db_sekolah</strong>. Tulis query rapi (baris baru + indent) dan simpan hasilnya.</small>
+        </div>
+        <div class="exercise-meta">
+          <span class="badge badge-soft rounded-pill px-3 py-2">Estimasi 40 menit</span>
+          <span class="badge badge-soft2 rounded-pill px-3 py-2">Wajib screenshot output</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-3 p-lg-4">
+      <div class="row g-3">
+        <div class="col-lg-5">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Instruksi pengerjaan</h6>
+              <ol class="mb-0 checklist">
+                <li><strong>Pilih database</strong>: jalankan <code>USE db_sekolah;</code> (atau pilih dari phpMyAdmin).</li>
+                <li><strong>Tulis query</strong> dulu di catatan, lalu jalankan di phpMyAdmin (tab SQL).</li>
+                <li><strong>Pastikan benar</strong>: cek nama kolom, tanda petik, dan hasil output.</li>
+                <li><strong>Simpan bukti</strong>: screenshot query + tabel hasilnya.</li>
+                <li><strong>Kumpulkan</strong>: file PDF/Doc berisi jawaban (nomor + query + screenshot).</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Soal latihan</h6>
+              
+<div class="exercise-grid mt-2">
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 1 — INNER JOIN</div>
+      <ol class="mb-0">
+        <li>Tampilkan siswa dan kelasnya: <code>siswa</code> + <code>siswa_kelas</code> + <code>kelas</code>.</li>
+        <li>Pilih kolom: nis, nama, nama_kelas, tahun_ajaran.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 2 — LEFT JOIN (NULL)</div>
+      <ol class="mb-0">
+        <li>Tampilkan semua siswa beserta status peminjaman (jika ada).</li>
+        <li>Gunakan LEFT JOIN agar siswa tanpa pinjam tetap tampil.</li>
+        <li>Tuliskan 1 kalimat: mengapa bisa muncul NULL?</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 3 — UNION vs UNION ALL</div>
+      <ol class="mb-0">
+        <li>Buat dua SELECT sederhana yang kolomnya sama (mis. daftar kota dari siswa, daftar penulis dari buku).</li>
+        <li>Gabungkan dengan UNION dan UNION ALL, bandingkan hasil duplikatnya.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 alert alert-info mb-0">
+        <strong>Catatan guru:</strong> Jika hasil kosong, cek lagi syaratnya. Bisa jadi datanya memang tidak memenuhi kondisi.
+        Kalian boleh menyesuaikan angka batas (misal 80, 85) asal logikanya tetap benar.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="container pb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3 gap-2">
+    <small class="muted">Didesain untuk GitHub Pages (statis).</small>
+    <small class="muted">© 2026 • Ringkasan modul + latihan</small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul 2 — Fungsi Agregat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white bg-opacity-75 border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-black" href="index.html">Rangkuman Modul 1–5</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="modul1.html">Modul 1 • SQL Dasar</a></li><li class="nav-item"><a class="nav-link active fw-bold" href="modul2.html">Modul 2 • Agregat</a></li><li class="nav-item"><a class="nav-link" href="modul3.html">Modul 3 • Relasi & Join</a></li><li class="nav-item"><a class="nav-link" href="modul4.html">Modul 4 • Form & CRUD</a></li><li class="nav-item"><a class="nav-link" href="modul5.html">Modul 5 • Session & Login</a></li><li class="nav-item"><a class="nav-link" href="latihan-ujian.html">Latihan Ujian</a></li>
+        <li class="nav-item"><a class="nav-link" href="lampiran-db.html">Lampiran • DB</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+
+<section class="hero p-4 p-lg-5">
+  <h1 class="h2 fw-black mb-2 section-title">Modul 2 — Fungsi Agregat + GROUP BY</h1>
+  <p class="mb-0">
+    Di modul ini kalian belajar membuat “laporan ringkas” dari sekumpulan data.
+    Fungsi agregat mengubah banyak baris menjadi satu nilai (jumlah, total, rata-rata, min, max).
+  </p>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Kamus Istilah (Modul 2)</h5>
+      <p class="muted mb-3">Kalau kalian paham istilah ini, soal agregat biasanya jadi mudah.</p>
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>AGGREGATE</strong> = fungsi ringkasan → mengubah banyak baris menjadi satu nilai (COUNT/SUM/AVG/MIN/MAX).</li>
+            <li><strong>COUNT</strong> = menghitung jumlah baris.</li>
+            <li><strong>SUM</strong> = menjumlahkan total.</li>
+            <li><strong>AVG</strong> = menghitung rata-rata.</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <ul class="mb-0">
+            <li><strong>DISTINCT</strong> = mengambil nilai unik (tanpa duplikat).</li>
+            <li><strong>GROUP BY</strong> = mengelompokkan baris sebelum dihitung agregat.</li>
+            <li><strong>HAVING</strong> = menyaring hasil agregat setelah GROUP BY.</li>
+            <li><strong>WHERE</strong> = menyaring baris sebelum GROUP BY.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold">Cara berpikir agregat (biar tidak bingung)</h5>
+      <p class="mb-2">
+        Agregat dipakai saat kalian tidak lagi ingin melihat daftar detail, tetapi ingin melihat <strong>ringkasan</strong>.
+        Misalnya: jumlah siswa, total SKS, rata-rata nilai. Jika kalian memakai agregat, biasanya kalian akan bertemu <code>GROUP BY</code>.
+      </p>
+      <ul class="mb-0">
+        <li><code>GROUP BY</code> = mengelompokkan baris menjadi beberapa kelompok.</li>
+        <li><code>COUNT/SUM/AVG</code> = menghitung ringkasan di tiap kelompok.</li>
+        <li><code>HAVING</code> = menyaring hasil ringkasan (bukan menyaring baris mentah).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="mt-4">
+
+<div class="card shadow-sm"><div class="card-body">
+  <h5 class="fw-bold">Materi yang sering muncul</h5>
+  <ul class="mb-0">
+    <li>COUNT, SUM, AVG, MIN, MAX dan kapan dipakai.</li>
+    <li>DISTINCT untuk nilai unik.</li>
+    <li>GROUP BY untuk rekap per kelompok.</li>
+    <li>Perbedaan WHERE dan HAVING.</li>
+  </ul>
+</div></div>
+
+</section>
+
+<section class="mt-4">
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card shadow-sm h-100"><div class="card-body">
+        <h5 class="fw-bold">1) Fungsi Agregat</h5>
+        <ul class="mb-0">
+          <li><code>COUNT()</code> menghitung jumlah data</li>
+          <li><code>SUM()</code> menjumlahkan total</li>
+          <li><code>AVG()</code> menghitung rata-rata</li>
+          <li><code>MIN()</code> nilai terkecil</li>
+          <li><code>MAX()</code> nilai terbesar</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm h-100"><div class="card-body">
+        <h5 class="fw-bold">2) DISTINCT, GROUP BY, HAVING</h5>
+        <p class="mb-2">
+          <code>DISTINCT</code> menghapus duplikasi. <code>GROUP BY</code> mengelompokkan.
+          <code>HAVING</code> menyaring hasil agregat (karena WHERE tidak boleh berisi agregat).
+        </p>
+        <div class="alert alert-warning mb-0"><strong>Ingat:</strong> WHERE sebelum GROUP BY, HAVING setelah GROUP BY.</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-4">
+  <div class="card shadow-sm"><div class="card-body">
+    <h5 class="fw-bold">Contoh Praktik</h5>
+    <p class="muted mb-3">Contoh memakai tabel <code>matakuliah</code> (kode_mk, nama_mk, sks, semester).</p>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <h6 class="fw-bold">A) DISTINCT</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m2_distinct">Copy</button>
+</div>
+<pre id="m2_distinct" data-raw="-- DISTINCT: ambil nilai unik (tanpa duplikat)
+SELECT DISTINCT alamat
+FROM siswa
+ORDER BY alamat;"><code>-- DISTINCT: ambil nilai unik (tanpa duplikat)
+SELECT DISTINCT alamat
+FROM siswa
+ORDER BY alamat;</code></pre>
+
+      </div>
+      <div class="col-lg-6">
+        <h6 class="fw-bold">B) Agregat dasar</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m2_aggr">Copy</button>
+</div>
+<pre id="m2_aggr" data-raw="-- Fungsi agregat (ringkasan data)
+
+-- COUNT: jumlah siswa
+SELECT COUNT(*) AS jumlah_siswa
+FROM siswa;
+
+-- AVG: rata-rata nilai (semester 1)
+SELECT AVG(nilai_angka) AS rata_rata_nilai
+FROM nilai
+WHERE semester = 1;
+
+-- MIN &amp; MAX: nilai terendah dan tertinggi
+SELECT MIN(nilai_angka) AS nilai_min, MAX(nilai_angka) AS nilai_max
+FROM nilai;
+
+-- SUM: total stok buku
+SELECT SUM(stok) AS total_stok_buku
+FROM buku;"><code>-- Fungsi agregat (ringkasan data)
+
+-- COUNT: jumlah siswa
+SELECT COUNT(*) AS jumlah_siswa
+FROM siswa;
+
+-- AVG: rata-rata nilai (semester 1)
+SELECT AVG(nilai_angka) AS rata_rata_nilai
+FROM nilai
+WHERE semester = 1;
+
+-- MIN &amp; MAX: nilai terendah dan tertinggi
+SELECT MIN(nilai_angka) AS nilai_min, MAX(nilai_angka) AS nilai_max
+FROM nilai;
+
+-- SUM: total stok buku
+SELECT SUM(stok) AS total_stok_buku
+FROM buku;</code></pre>
+
+      </div>
+      <div class="col-lg-12">
+        <h6 class="fw-bold mt-2">C) GROUP BY + HAVING</h6>
+
+<div class="d-flex justify-content-end mb-2">
+  <button class="btn btn-outline-light btn-sm copy-btn" data-copy="m2_group">Copy</button>
+</div>
+<pre id="m2_group" data-raw="-- GROUP BY: rekap per kelompok
+
+-- Rekap jumlah siswa per alamat
+SELECT alamat, COUNT(*) AS jumlah_siswa
+FROM siswa
+GROUP BY alamat
+ORDER BY jumlah_siswa DESC;
+
+-- Rekap jumlah peminjaman per status, tampilkan hanya yang jumlahnya &gt;= 2
+SELECT status, COUNT(*) AS jumlah
+FROM peminjaman
+GROUP BY status
+HAVING COUNT(*) &gt;= 2;"><code>-- GROUP BY: rekap per kelompok
+
+-- Rekap jumlah siswa per alamat
+SELECT alamat, COUNT(*) AS jumlah_siswa
+FROM siswa
+GROUP BY alamat
+ORDER BY jumlah_siswa DESC;
+
+-- Rekap jumlah peminjaman per status, tampilkan hanya yang jumlahnya &gt;= 2
+SELECT status, COUNT(*) AS jumlah
+FROM peminjaman
+GROUP BY status
+HAVING COUNT(*) &gt;= 2;</code></pre>
+
+      </div>
+    </div>
+  </div></div>
+</section>
+
+
+<section class="mt-4">
+  <div class="card shadow-sm exercise-card">
+    <div class="card-header py-3 px-3 px-lg-4">
+      <div class="exercise-head">
+        <div>
+          <h5 class="fw-bold mb-1">Latihan (Modul 2)</h5>
+          <small class="muted">Kerjakan di <strong>db_sekolah</strong>. Tulis query rapi (baris baru + indent) dan simpan hasilnya.</small>
+        </div>
+        <div class="exercise-meta">
+          <span class="badge badge-soft rounded-pill px-3 py-2">Estimasi 35 menit</span>
+          <span class="badge badge-soft2 rounded-pill px-3 py-2">Wajib screenshot output</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-3 p-lg-4">
+      <div class="row g-3">
+        <div class="col-lg-5">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Instruksi pengerjaan</h6>
+              <ol class="mb-0 checklist">
+                <li><strong>Pilih database</strong>: jalankan <code>USE db_sekolah;</code> (atau pilih dari phpMyAdmin).</li>
+                <li><strong>Tulis query</strong> dulu di catatan, lalu jalankan di phpMyAdmin (tab SQL).</li>
+                <li><strong>Pastikan benar</strong>: cek nama kolom, tanda petik, dan hasil output.</li>
+                <li><strong>Simpan bukti</strong>: screenshot query + tabel hasilnya.</li>
+                <li><strong>Kumpulkan</strong>: file PDF/Doc berisi jawaban (nomor + query + screenshot).</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card shadow-sm exercise-card h-100">
+            <div class="card-body">
+              <h6 class="fw-bold">Soal latihan</h6>
+              
+<div class="exercise-grid mt-2">
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 1 — COUNT & DISTINCT</div>
+      <ol class="mb-0">
+        <li>Hitung jumlah siswa (COUNT).</li>
+        <li>Hitung jumlah alamat unik siswa (COUNT DISTINCT alamat).</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 2 — GROUP BY</div>
+      <ol class="mb-0">
+        <li>Kelompokkan siswa berdasarkan alamat, hitung jumlahnya.</li>
+        <li>Kelompokkan nilai berdasarkan mapel, hitung rata-rata nilainya.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card exercise-card">
+    <div class="card-body">
+      <div class="fw-bold mb-1">Latihan 3 — HAVING</div>
+      <ol class="mb-0">
+        <li>Tampilkan alamat yang jumlah siswanya ≥ 2 (pakai HAVING).</li>
+        <li>Tampilkan mapel yang rata-rata nilainya ≥ 85 (pakai HAVING).</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 alert alert-info mb-0">
+        <strong>Catatan guru:</strong> Jika hasil kosong, cek lagi syaratnya. Bisa jadi datanya memang tidak memenuhi kondisi.
+        Kalian boleh menyesuaikan angka batas (misal 80, 85) asal logikanya tetap benar.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="container pb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3 gap-2">
+    <small class="muted">Didesain untuk GitHub Pages (statis).</small>
+    <small class="muted">© 2026 • Ringkasan modul + latihan</small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latihan Ujian — Simulasi Paket A & B</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white bg-opacity-75 border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-black" href="index.html">Rangkuman Modul 1–5</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link active fw-bold" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="modul1.html">Modul 1 • SQL Dasar</a></li><li class="nav-item"><a class="nav-link" href="modul2.html">Modul 2 • Agregat</a></li><li class="nav-item"><a class="nav-link" href="modul3.html">Modul 3 • Relasi & Join</a></li><li class="nav-item"><a class="nav-link" href="modul4.html">Modul 4 • Form & CRUD</a></li><li class="nav-item"><a class="nav-link" href="modul5.html">Modul 5 • Session & Login</a></li><li class="nav-item"><a class="nav-link" href="latihan-ujian.html">Latihan Ujian</a></li>
+        <li class="nav-item"><a class="nav-link" href="lampiran-db.html">Lampiran • DB</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-4">
+
+
+<section class="hero p-4 p-lg-5">
+  <h1 class="h2 fw-black mb-2 section-title">Latihan Ujian — Simulasi Paket A & Paket B</h1>
+  <p class="mb-0">
+    Halaman ini berisi latihan yang <strong>setara</strong> bobotnya dengan paket A dan paket B,
+    tetapi dengan kasus dan angka yang <strong>berbeda</strong>. Kerjakan untuk melatih cara berpikir dan struktur jawaban.
+  </p>
+</section>
+
+<section class="mt-4">
+  <div class="alert alert-warning">
+    <strong>Aturan latihan:</strong> fokus pada langkah dan alasan pemakaian klausa SQL (WHERE, GROUP BY, HAVING, ORDER BY).
+    Tuliskan alasan singkat di bawah jawaban kalian.
+  </div>
+</section>
+
+<section class="mt-3">
+  <ul class="nav nav-pills gap-2" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active rounded-pill" data-bs-toggle="pill" data-bs-target="#paketA" type="button" role="tab">Simulasi A</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link rounded-pill" data-bs-toggle="pill" data-bs-target="#paketB" type="button" role="tab">Simulasi B</button>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="paketA" role="tabpanel">
+      <div class="card shadow-sm"><div class="card-body">
+        <h5 class="fw-bold">Simulasi A</h5>
+        <p class="muted mb-3">Materi kunci: ORDER BY vs GROUP BY, LEFT JOIN, AUTO_INCREMENT, DDL, fungsi agregat.</p>
+
+        <h6 class="fw-bold">A1 — Konsep ORDER BY vs GROUP BY</h6>
+        <p>
+          Seorang admin ingin membuat laporan belanja pelanggan. Ia ingin (1) mengurutkan item yang sering dibeli setiap pelanggan dari yang terbanyak,
+          lalu (2) membuat rekap total belanja per pelanggan dan hanya menampilkan pelanggan yang totalnya melewati batas tertentu.
+          Jelaskan kapan memakai <code>ORDER BY</code> dan kapan memakai <code>GROUP BY</code>.
+        </p>
+
+        <h6 class="fw-bold mt-3">A2 — LEFT JOIN 3 tabel</h6>
+        <p>
+          Buat skenario 3 tabel: <strong>pelanggan</strong>, <strong>transaksi</strong>, <strong>produk</strong>.
+          Jelaskan bagaimana LEFT JOIN dipakai agar pelanggan yang belum pernah transaksi tetap tampil,
+          dan sebutkan bagian hasil mana yang akan bernilai <code>NULL</code>.
+        </p>
+
+        <h6 class="fw-bold mt-3">A3 — AUTO_INCREMENT</h6>
+        <p>
+          Jelaskan mengapa <code>AUTO_INCREMENT</code> paling cocok untuk kolom bertipe bilangan bulat (<code>INT</code>).
+          Berikan contoh kolom yang cocok (misalnya id) dan yang tidak cocok (misalnya kode yang mengandung huruf).
+        </p>
+
+        <h6 class="fw-bold mt-3">A4 — DDL</h6>
+        <p>
+          Jelaskan kepanjangan DDL dan tuliskan minimal 3 perintah DDL. Tambahkan 1 contoh perintah DML untuk pembanding.
+        </p>
+
+        <h6 class="fw-bold mt-3">A5 — Fungsi agregat</h6>
+        <p>
+          Jelaskan apa itu fungsi agregat. Sebutkan minimal 4 fungsi agregat dan contoh pemakaiannya.
+        </p>
+
+        <hr class="my-4"/>
+
+        <h6 class="fw-bold">A6 — Pilihan ganda (setara)</h6>
+        <ol class="mb-0">
+          <li>Perintah untuk menghapus database bernama <code>db_latihan</code> adalah …</li>
+          <li>Keyword untuk mengambil nilai unik dari suatu kolom adalah …</li>
+          <li>Fungsi untuk menghitung jumlah baris adalah …</li>
+          <li>Perintah untuk mengubah struktur tabel adalah …</li>
+          <li>Klausa untuk mengurutkan data dari Z ke A adalah …</li>
+        </ol>
+      </div></div>
+    </div>
+
+    <div class="tab-pane fade" id="paketB" role="tabpanel">
+      <div class="card shadow-sm"><div class="card-body">
+        <h5 class="fw-bold">Simulasi B</h5>
+        <p class="muted mb-3">Materi kunci: HAVING vs WHERE vs LIKE, JOIN 2 tabel, DISTINCT, DML & DDL, jenis JOIN.</p>
+
+        <h6 class="fw-bold">B1 — HAVING, WHERE, LIKE</h6>
+        <p>
+          Seorang supervisor ingin membuat rekap penjualan per kategori. Ia perlu (1) memfilter baris data dengan kata kunci nama produk,
+          (2) menghitung total penjualan per kategori, dan (3) menampilkan hanya kategori dengan total di atas batas tertentu.
+          Jelaskan peran <code>LIKE</code>, <code>WHERE</code>, dan <code>HAVING</code> pada kasus ini.
+        </p>
+
+        <h6 class="fw-bold mt-3">B2 — JOIN 2 tabel</h6>
+        <p>
+          Diberi tabel <strong>karyawan</strong>(id_karyawan, nama, id_departemen) dan <strong>departemen</strong>(id_departemen, nama_departemen).
+          Jenis JOIN apa yang tepat agar nama karyawan tampil bersama nama departemennya? Jelaskan langkahnya.
+        </p>
+
+        <h6 class="fw-bold mt-3">B3 — DISTINCT</h6>
+        <p>
+          Jelaskan fungsi DISTINCT. Berikan contoh situasi kapan DISTINCT diperlukan dan kapan tidak perlu.
+        </p>
+
+        <h6 class="fw-bold mt-3">B4 — DML dan DDL</h6>
+        <p>
+          Jelaskan kepanjangan DML dan tuliskan 3 contoh perintah DML. Lalu sebutkan perintah yang termasuk DDL.
+        </p>
+
+        <h6 class="fw-bold mt-3">B5 — Jenis JOIN</h6>
+        <p>
+          Sebutkan minimal 2 jenis JOIN yang sering dipakai. Jelaskan perbedaan singkatnya dan contoh query-nya.
+        </p>
+
+        <hr class="my-4"/>
+
+        <h6 class="fw-bold">B6 — Praktik query (setara)</h6>
+        <ol class="mb-0">
+          <li>Buat query pencarian data dengan LIKE (awalan huruf tertentu).</li>
+          <li>Buat query rekap per kelompok (GROUP BY) dan total (SUM atau COUNT).</li>
+          <li>Tambahkan HAVING untuk menyaring kelompok yang totalnya melewati batas.</li>
+          <li>Urutkan hasil dengan ORDER BY (DESC).</li>
+        </ol>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+<footer class="container pb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3 gap-2">
+    <small class="muted">Didesain untuk GitHub Pages (statis).</small>
+    <small class="muted">© 2026 • Ringkasan modul + latihan</small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
